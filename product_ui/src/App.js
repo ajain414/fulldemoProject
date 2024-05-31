@@ -11,7 +11,7 @@ function App() {
       <Navbar/>
 
       <Routes>
-        <Route path='/' element={<Home />}></Route>
+        <Route path='/' element={<Home/>}></Route>
         <Route path='addProduct' element={<AddProduct/>}></Route>
         <Route path='editProduct/:id' element={<EditProduct/>}></Route>
       </Routes>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import productService from '../service/product.service';
 import { useNavigate, useParams } from 'react-router-dom';
+import Validation from './Validation';
 
 export default function EditProduct() {
   const [product,setProduct]=useState({
@@ -13,12 +14,7 @@ export default function EditProduct() {
   });
   const {id}=useParams();
   console.log(id);
-  const[validations,setValidations] = useState({
-    productName:"",
-    description:"",
-    price:"",
-    status:""
-  })
+
   useEffect(()=>{
     productService.getProductById(id).then((res)=>{
       // console.log(res.data);
@@ -27,21 +23,6 @@ export default function EditProduct() {
       console.log(error);
     });
   },[id]);
- 
-  function isNumber(value) {
-    console.log(value);
-    if(isNaN(value) )
-    {
-      // console.log("invoked");
-      // validations.price="NaN";
-      product.price='';
-      // console.log(validations);
-      validateForm();
-      return false;}
-
-    return typeof value === 'number';
-  }
-
 
 const navigate=useNavigate();
   const [msg,setMsg]=useState("");
@@ -51,60 +32,15 @@ const navigate=useNavigate();
   };
 
 
-  function validateForm(){
-    let valid = true;
-
-    const errorsCopy = {...validations}
-    
-    // console.log(errorsCopy);
-
-    if(product.productName.trim()){
-        errorsCopy.productName='';
-    }else{
-        errorsCopy.productName='productName is required';
-        valid=false;
-    }
-    if(product.description.trim()){
-      errorsCopy.description='';
-  }else{
-      errorsCopy.description='description is required';
-      valid=false;
-  }
-
-    if(product.price.trim()){
-        errorsCopy.price='';
-    }else{
-      if(product.price==='')
-        {errorsCopy.price='Invalid price value ';
-        valid=false;}
-      else
-        {
-          errorsCopy.price='Price is required';
-          valid=false;
-        }
-    }
-
-    if(product.status.trim()){
-        errorsCopy.status='';
-    }else{
-        errorsCopy.status='status is required';
-        valid=false;
-    }
-    // console.log(errorsCopy);
-    setValidations(errorsCopy);
-    // console.log(validations);
-
-    return valid;
-} 
-
+const[error,setError]=useState({});
 
   const ProductUpdate=(e)=>{
     e.preventDefault();
+    
+    
+    setError(Validation(product)[0]);
 
-
-    if(validateForm()){
-
-      if(isNumber(Number(product.price))){
+    if (Validation(product)[1]===0) {
    productService.editProduct(product).then((res)=>{
     setMsg("product updated successfully!!");
     
@@ -114,13 +50,9 @@ const navigate=useNavigate();
     console.log(error);
    });
   }
-}
+ 
   };
-
-
-
-
-  return (
+ return (
     <>
     <div className='container mt-3'>
       <div className='row'>
@@ -136,26 +68,26 @@ const navigate=useNavigate();
 
                 <div className="mb-3">
                   <label >Enter Product Name</label>
-                  <input type="text" name='productName' className={`form-control ${validations.productName ? 'is-invalid':''}`} onChange={(e)=>handleChange(e)} value={product.productName}/>
-                  {validations.productName && <div className='invalid-feedback'>{validations.productName}</div>}
+                  <input type="text" name='productName' className="form-control" onChange={(e)=>handleChange(e)} value={product.productName}/>
+                  {error.productName && <p style={{color:"red"}}>{error.productName}</p>}
                 </div>
 
                 <div className="mb-3">
                   <label >Enter Description</label>
-                  <input type="text" name='description' className={`form-control ${validations.description ? 'is-invalid':''}`} onChange={(e)=>handleChange(e)} value={product.description}/>
-                  {validations.description && <div className='invalid-feedback'>{validations.description}</div>}
+                  <input type="text" name='description' className="form-control" onChange={(e)=>handleChange(e)} value={product.description}/>
+                  {error.description && <p style={{color:"red"}}>{error.description}</p>}
                 </div>
 
                 <div className="mb-3">
                   <label >Enter Price</label>
-                  <input type="text" name='price' className={`form-control ${validations.price ? 'is-invalid':''}`} onChange={(e)=>handleChange(e)} value={product.price}/>
-                  {validations.price && <div className='invalid-feedback'>{validations.price}</div>}
+                  <input type="text" name='price' className="form-control" onChange={(e)=>handleChange(e)} value={product.price}/>
+                  {error.price && <p style={{color:"red"}}>{error.price}</p>}
                 </div>
 
                 <div className="mb-3">
                   <label >Enter Status</label>
-                  <input type="text" name='status' className={`form-control ${validations.status ? 'is-invalid':''}`} onChange={(e)=>handleChange(e)} value={product.status}/>
-                  {validations.status && <div className='invalid-feedback'>{validations.status}</div>}
+                  <input type="text" name='status' className="form-control" onChange={(e)=>handleChange(e)} value={product.status}/>
+                  {error.status && <p style={{color:"red"}}>{error.status}</p>}
                 </div>
 
                 <button className="btn btn-primary col-md-12">Update</button>

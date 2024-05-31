@@ -19,6 +19,7 @@ const Home = () => {
     });
   };
 
+
   const deleteProduct=(id)=>{
     productService.deleteProduct(id).then((res)=>{
       // console.log(id);
