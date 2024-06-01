@@ -58,7 +58,7 @@ const[error,setError]=useState({});
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
           <div className='card'>
-            <div className='card-header fs-3 text-center'>
+            <div className='card-header bg-dark text-white fs-3 text-center'>
               Update Product
             </div>
             {msg && <p className='fs-4 text-center text-success'>{msg}</p>}
@@ -90,7 +90,7 @@ const[error,setError]=useState({});
                   {error.status && <p style={{color:"red"}}>{error.status}</p>}
                 </div>
 
-                <button className="btn btn-primary col-md-12">Update</button>
+                <button className="btn btn-dark col-md-12">Update</button>
 
 
               </form>

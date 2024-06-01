@@ -75,7 +75,7 @@ export default function AddProduct() {
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <div className="card">
-              <div className="card-header fs-3 text-center">Add Product</div>
+              <div className="card-header bg-dark text-white fs-3 text-center">Add Product</div>
               {msg && <p className="fs-4 text-center text-success">{msg}</p>}
 
               <div className="card-body">
@@ -129,7 +129,7 @@ export default function AddProduct() {
                     {error.status && <p style={{color:"red"}}>{error.status}</p>}
                   </div>
 
-                  <button className="btn btn-primary col-md-12">Submit</button>
+                  <button className="btn btn-dark col-md-12">Submit</button>
                 </form>
               </div>
             </div>
