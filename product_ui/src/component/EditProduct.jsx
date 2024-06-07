@@ -17,7 +17,7 @@ export default function EditProduct() {
 
   useEffect(()=>{
     productService.getProductById(id).then((res)=>{
-      // console.log(res.data);
+      console.log(res.data);
         setProduct(res.data);
     }).catch((error)=>{
       console.log(error);
@@ -37,7 +37,7 @@ const[error,setError]=useState({});
   const ProductUpdate=(e)=>{
     e.preventDefault();
     
-    
+    // console.log(product);
     setError(Validation(product)[0]);
 
     if (Validation(product)[1]===0) {
@@ -85,11 +85,21 @@ const[error,setError]=useState({});
                 </div>
 
                 <div className="mb-3">
-                  <label >Enter Status</label>
-                  <input type="text" name='status' className="form-control" onChange={(e)=>handleChange(e)} value={product.status}/>
-                  {error.status && <p style={{color:"red"}}>{error.status}</p>}
-                </div>
-
+                    <label>Enter Status</label>
+                    <select class="form-select" aria-label="Default select example"
+                      type="text"
+                      name="status"
+                      className="form-control"
+                      onChange={(e) => handleChange(e)}
+                      value={product.status}
+                    >
+                    <option  value="" selected>Open this select menu</option>
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                    
+                  </select>
+                   {error.status && <p style={{color:"red"}}>{error.status}</p>}
+                  </div>
                 <button className="btn btn-dark col-md-12">Update</button>
 
 

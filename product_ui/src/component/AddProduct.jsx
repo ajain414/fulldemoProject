@@ -14,6 +14,7 @@ export default function AddProduct() {
   const [msg, setMsg] = useState("");
 
   const handleChange = (e) => {
+    e.preventDefault();
     const value = e.target.value;
     setProduct({ ...product, [e.target.name]: value });
   };
@@ -22,6 +23,7 @@ export default function AddProduct() {
   productService
     .getAllProduct()
     .then((res) => {
+
       setProductList(res.data);
     })
     .catch((error) => {
@@ -29,7 +31,7 @@ export default function AddProduct() {
     });
   function isok(product) {
     for (let i = 0; i < productList.length; i++) {
-      console.log(toggle);
+      // console.log(toggle);
       if (
         productList[i].productName === product.productName &&
         productList[i].description === product.description &&
@@ -40,10 +42,15 @@ export default function AddProduct() {
       }
     }
   }
+
+ 
   const navigate=useNavigate();
   const [toggle, setToggle] = useState(true);
   const[error,setError]=useState({});
+
+
   const ProductRegistor = (e) => {
+    console.log(product)
     e.preventDefault();
     setError(Validation(product)[0]);
 
@@ -119,14 +126,19 @@ export default function AddProduct() {
 
                   <div className="mb-3">
                     <label>Enter Status</label>
-                    <input
+                    <select class="form-select" aria-label="Default select example"
                       type="text"
                       name="status"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
                       value={product.status}
-                    />
-                    {error.status && <p style={{color:"red"}}>{error.status}</p>}
+                    >
+                    <option selected>Open this select menu</option>
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                    
+                  </select>
+                   {error.status && <p style={{color:"red"}}>{error.status}</p>}
                   </div>
 
                   <button className="btn btn-dark col-md-12">Submit</button>

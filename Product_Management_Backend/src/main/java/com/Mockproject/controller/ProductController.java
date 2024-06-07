@@ -2,6 +2,7 @@ package com.Mockproject.controller;
 
 import com.Mockproject.model.Product;
 import com.Mockproject.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @PostMapping("/saveProduct")
-    public ResponseEntity<?> saveProduct(@RequestBody Product product)
+    public ResponseEntity<?> saveProduct(@RequestBody @Valid Product product)
     {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
@@ -32,7 +33,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.deleteProduct(id),HttpStatus.OK);
     }
     @PostMapping("/editProduct/{id}")
-    public ResponseEntity<?>editProduct(@RequestBody Product product,@PathVariable Integer id)
+    public ResponseEntity<?>editProduct(@RequestBody @Valid Product product,@PathVariable Integer id)
     {
         return new ResponseEntity<>(productService.editProduct(product,id), HttpStatus.CREATED);
     }
