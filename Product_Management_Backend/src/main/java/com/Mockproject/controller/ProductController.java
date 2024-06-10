@@ -1,6 +1,7 @@
 package com.Mockproject.controller;
 
 import com.Mockproject.model.Product;
+import com.Mockproject.model.ProductRequestLayer;
 import com.Mockproject.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @PostMapping("/saveProduct")
-    public ResponseEntity<?> saveProduct(@RequestBody @Valid Product product)
+    public ResponseEntity<?> saveProduct(@RequestBody @Valid ProductRequestLayer product)
     {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }

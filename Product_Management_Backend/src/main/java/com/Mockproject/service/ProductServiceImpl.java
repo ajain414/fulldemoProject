@@ -1,6 +1,7 @@
 package com.Mockproject.service;
 
 import com.Mockproject.model.Product;
+import com.Mockproject.model.ProductRequestLayer;
 import com.Mockproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,14 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepo;
 
     @Override
-    public Product saveProduct(Product product) {
-        return productRepo.save(product);
+    public Product saveProduct(ProductRequestLayer product) {
+
+        Product pr=new Product();
+        pr.setProductName(product.getProductName());
+        pr.setDescription(product.getDescription());
+        pr.setPrice(product.getPrice());
+        pr.setStatus(product.getStatus());
+        return productRepo.save(pr);
     }
 
     @Override

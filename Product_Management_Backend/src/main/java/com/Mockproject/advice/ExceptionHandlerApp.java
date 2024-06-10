@@ -1,6 +1,8 @@
 package com.Mockproject.advice;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,5 +30,11 @@ public class ExceptionHandlerApp {
     public String handleNoSuchElement(NoSuchElementException ex)
     {
         return "With this id "+ex.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleInvalidInput(HttpMessageNotReadableException e) {
+        return ResponseEntity.badRequest().body("Status should be either Available or Unavailable");
     }
 }
